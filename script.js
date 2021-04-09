@@ -1,10 +1,10 @@
 let money = 250;
-let income = true;
-let addExpenses = 'Too much expanses';
-let deposite = 1000;
-let mission = 'Learn JavaScript at 2 mounces';
-let period = 1.5;
+let income = 'development';
+let addExpenses = 'communal, taxy, products';
+let deposite = true;
+let mission = 100000;
+let period = 10;
 
-alert('Hello brave new world');
-
-console.log(money);
+console.log(typeof money);
+console.log(typeof income);
+console.log(typeof deposite);
