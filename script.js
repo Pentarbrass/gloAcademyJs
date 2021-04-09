@@ -5,3 +5,6 @@ let deposite = 1000;
 let mission = 'Learn JavaScript at 2 mounces';
 let period = 1.5;
 
+alert('Hello brave new world');
+
+console.log(money);
