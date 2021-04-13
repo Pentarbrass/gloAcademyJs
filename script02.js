@@ -1,38 +1,16 @@
 'use strict';
 
-
-//Task#1
-let lang = 'en';
-let ruWeek = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
-let engWeek = ['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su'];
-
-// Sub#1
-if (lang === 'ru') {
-    console.log(ruWeek);
-}
-if (lang === 'en') {
-    console.log(engWeek);
-}
-
-// Sub#2
-switch (lang) {
-    case 'ru': 
-        console.log(ruWeek);
-        break;
-    case 'en': 
-        console.log(engWeek);
-        break;
-}
-
-// Sub#3
-let week = {
-    'ru': ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'],
-    'en': ['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su'],
+function toString(string) {
+    if (typeof(string) !== 'string') {
+        alert ('Внимание! Не верное знаение функции toString()!');
+        return;
+    } else {
+        string = string.replace(/ /g, '');
+    }
+    if (string.length > 30) {
+        string = string.substring(0, 30)+'...';
+    }
+    return string;
 };
-console.log(week.ru);
-console.log(week.en);
 
-//Task#2
-let namePerson = 'Дима';
-
-console.log(namePerson.toLowerCase() === 'артем' ? 'директор' : namePerson.toLowerCase() === 'максим' ? 'преподаватель' : 'студент');
+console.log(toString('Этот текст должен быть достаточно длинным, что бы увидеть как работает функция!'));
