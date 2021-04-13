@@ -1,27 +1,38 @@
-let num = 266219;
+'use strict';
 
-output = [],
-sNumber = num.toString();
 
-for (let i = 0, len = sNumber.length; i < len; i += 1) {
-    output.push(+sNumber.charAt(i));
+//Task#1
+let lang = 'en';
+let ruWeek = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
+let engWeek = ['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su'];
+
+// Sub#1
+if (lang === 'ru') {
+    console.log(ruWeek);
 }
-console.log(output);
-
-let total= 1;
-
-for (let i = 0; i < output.length; ++i) {
-    total *= output[i];
+if (lang === 'en') {
+    console.log(engWeek);
 }
-console.log(total);
 
-total **= 3;
-console.log(total);
+// Sub#2
+switch (lang) {
+    case 'ru': 
+        console.log(ruWeek);
+        break;
+    case 'en': 
+        console.log(engWeek);
+        break;
+}
 
-let strTotal = total.toString();
-console.log(typeof strTotal);
+// Sub#3
+let week = {
+    'ru': ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'],
+    'en': ['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su'],
+};
+console.log(week.ru);
+console.log(week.en);
 
-console.log(strTotal.substr(0, 2));
+//Task#2
+let namePerson = 'Дима';
 
-
-//Откровенный костыль, работу с перебором элементов массива не усвоил
+console.log(namePerson.toLowerCase() === 'артем' ? 'директор' : namePerson.toLowerCase() === 'максим' ? 'преподаватель' : 'студент');
