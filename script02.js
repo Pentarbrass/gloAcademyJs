@@ -29,8 +29,8 @@ let week = {
     'ru': ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'],
     'en': ['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su'],
 };
-console.log(week.ru);
-console.log(week.en);
+console.log(week[lang]);
+
 
 //Task#2
 let namePerson = 'Дима';
