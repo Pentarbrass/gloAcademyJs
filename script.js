@@ -135,16 +135,11 @@ for (let item in appData) {
     console.log('Свойство: ', item, ' Значение: ', appData[item]);
 }
 
-for (let item in appData.addExpenses) {
-    let newString = '';
-    for (let i = 0; i < appData.addExpenses[item].length; i++) {
-        if (i === 0) {
-            newString += appData.addExpenses[item][i].toUpperCase();
-        } else {
-            newString += appData.addExpenses[item][i];
-        }
-    }
-    appData.addExpenses[item] = newString;
-}
-
-console.log(appData.addExpenses.join(', '));
+let newStr = appData.addExpenses;
+newStr.forEach((item, i) => {
+    let res;
+    item = item.trim();
+    res = item.replace(item[0], item[0].toUpperCase());
+    newStr[i] = res;
+});
+console.log(newStr.join(', '));
