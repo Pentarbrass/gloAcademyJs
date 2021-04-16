@@ -13,9 +13,6 @@ const timeDisplay = () => {
         if (String(elem).length === 1) { return '0' + elem; } else { return String(elem); }
     };
     const changeEnding = (num, timeElem = '') => {
-        // const textVariant = (() => {return timeElem === 'h' ? [' час ', ' часа ', ' часов '] :
-        //     timeElem === 'm' ? [' минута ', ' минуты ', ' минут '] :
-        //     [' секунда ', ' секунды ', ' секунд '];})();
         const textVariant = (timeElem === 'h' ? [' час ', ' часа ', ' часов '] :
             timeElem === 'm' ? [' минута ', ' минуты ', ' минут '] :
             [' секунда ', ' секунды ', ' секунд ']);
