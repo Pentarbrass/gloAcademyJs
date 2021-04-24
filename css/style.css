@@ -1,0 +1,19 @@
+.hero{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 100px;
+}
+#change{
+    background-color: #fff;
+    font-size: 20px;
+    padding: 15px 30px;
+    border: 2px solid;
+    border-radius: 16px;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+    -ms-border-radius: 16px;
+    -o-border-radius: 16px;
+    cursor: pointer;
+}
