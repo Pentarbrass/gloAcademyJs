@@ -45,7 +45,6 @@ DomElement.prototype.construct = function() {
         newElement.id = ('best');
     }
     
-    
     newElement.style.cssText = `
         height:  ${this.height}px;
         width:  ${this.width}px;
