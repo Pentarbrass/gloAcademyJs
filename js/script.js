@@ -148,9 +148,9 @@ let appData = {
             }
         });
 
-        for (let item in this.income) {
-            appData.additionalIncome += +this.income[item];
-        }
+        for (let key in this.income) {
+            this.incomeMonth += +this.income[key];
+    }
     },
 
     getAddExpenses: function () {
@@ -174,15 +174,15 @@ let appData = {
 
     getExpensesMonth: function() {
         let sum = 0;
-        for (let item in this.expenses) {
-            sum += this.expenses[item];
+        for (let item in appData.expenses) {
+            sum += +appData.expenses[item];
         }
-        this.expensesMonth = sum;
+        appData.expensesMonth = sum;
     },
 
     getBudget: function() {
-        this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth;
-        this.budgetDay = Math.floor(this.budgetMonth / 30);
+        appData.budgetMonth = appData.budget + appData.incomeMonth - appData.expensesMonth;
+        appData.budgetDay = Math.floor(this.budgetMonth / 30);
     },
 
     getAccumulatedMonth: function() {
@@ -223,16 +223,16 @@ let appData = {
     },
 
     calcPeriodMoney: function() {
-        return (+this.budgetMonth) * +periodSelect.value;
+        return (+appData.budgetMonth) * +periodSelect.value;
     },
     
     changlePeriodSelect: function() {
         periodAmount.textContent = periodSelect.value;
-        incomePeriodValue.value = this.calcPeriodMoney();
+        incomePeriodValue.value = appData.calcPeriodMoney();
     },
 
     calcPeriod: function () {
-        return this.budgetMonth * periodSelect.value;
+        return appData.budgetMonth * periodSelect.value;
     },
     blockStart: function () {
         startButton.disabled = !salaryAmount.value.trim();
