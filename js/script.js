@@ -78,6 +78,7 @@ class AppData {
         this.getExpensesMonth();
         this.getBudget();
         this.getAddExpInc();
+        this.blockage();
 
         this.showResalts();
         disabledInputText();
@@ -117,6 +118,7 @@ class AppData {
             const itemAmount = item.querySelector(`.${startStr}-amount`).value;
             if (itemTitle !== '' && itemAmount !== '') {
                 this[startStr][itemTitle] = itemAmount;
+                this.incomeMonth += startStr === 'income' ? +itemAmount : null;
             }
         };
 
@@ -148,11 +150,9 @@ class AppData {
     }
 
     getExpensesMonth () {
-        let sum = 0;
-        for (let key in this.expenses) {
-            sum += +this.expenses[key];
+        for (let elem in this.expenses) {
+            this.expensesMonth += this.expenses[elem];
         }
-        this.expensesMonth = sum;
     }
 
     getBudget() {
