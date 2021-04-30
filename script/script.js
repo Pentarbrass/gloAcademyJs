@@ -92,7 +92,6 @@ window.addEventListener('DOMContentLoaded', () => {
                 closeMenu();
                 if (target.classList.contains('close-btn')) {
                     closeMenu();
-                    animateScroll();
                 }
             } else if (!target.closest('menu')) {
                 closeMenu();
