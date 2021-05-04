@@ -253,13 +253,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
         slider.addEventListener('mouseover', event => {
             if (event.target.matches('.portfolio-btn') ||
-            event.target.matches('.dot')) {
+                event.target.matches('.dot')) {
                 stopSlide();
             }
         });
         slider.addEventListener('mouseout', event => {
             if (event.target.matches('.portfolio-btn') ||
-            event.target.matches('.dot')) {
+                event.target.matches('.dot')) {
                 startSlide();
             }
         });
@@ -282,5 +282,113 @@ window.addEventListener('DOMContentLoaded', () => {
     addDot();
     slider();
 
+    //Change pic
+
+    const setCommandImg = () => {
+        const command = document.querySelector('#command .row');
+
+        const changingPhotos = () => {
+            const target = event.target;
+
+            if (target.classList.contains('command__photo')) {
+                const lastSrc = target.src;
+
+                target.src = target.dataset.img;
+                target.dataset.img = lastSrc;
+            }
+        };
+
+        command.addEventListener('mouseover', changingPhotos);
+        command.addEventListener('mouseout', changingPhotos);
+    };
+
+    //Validation
+    const validateInputs = () => {
+        const calcInputs = document.querySelectorAll('input.calc-item'),
+            formName = document.querySelectorAll('[name=user_name]'),
+            formMessage = document.querySelectorAll('[name=user_message]'),
+            formEmail = document.querySelectorAll('[name=user_email]');
+
+        const validateNumberInputs = () => {
+            calcInputs.forEach(el => {
+                el.value = el.value.replace(/[^\d]/g, '');
+            });
+        };
+
+        const validateTextInputs = (input) => {
+            input.value = input.value.replace(/[^а-яё\-\ ]/gi, '');
+        };
+
+        const inputsTotal = (e) => {
+            if (e.target.matches('.calc-item')) {
+                validateNumberInputs();
+            }
+            if (e.target.matches('[name=user_name]')) {
+                validateTextInputs(e.target);
+            }
+            if (e.target.matches('#form2-message')) {
+                validateTextInputs(e.target);
+            }
+            if (e.target.matches('[name=user_email]')) {
+                e.target.value = e.target.value.replace(/[^a-z\@\_\-\.\!\~\*\']/gi, '');
+            }
+            if (e.target.matches('[type=tel]')) {
+                e.target.value = e.target.value.replace(/[^\d\(\)\-]/g, '');
+            }
+        };
+
+        const checkInputs = (input, exp) => {
+            while (!!input.value.match(exp)) {
+                input.value = input.value.replace(exp, '');
+            }
+        };
+
+        const trimInput = (input) => {
+            input.value = input.value.replace(/\s+/g, ' ');
+            input.value = input.value.replace(/\-+/g, '-');
+
+            let inputToExp = new RegExp("ReGeX" + input.value + "ReGeX");
+            if (/^[/ /-]/.test(inputToExp)) {
+                input.value = input.value.replace(/^[/ /-]/, '');
+            }
+            if (/[/ /-]$/.test(inputToExp)) {
+                input.value = input.value.replace(/[/ /-]$/, '');
+            }
+        };
+
+        function capitalize(input) {
+            let inputValue = input.value;
+            return inputValue.split(' ').map(item =>
+                item.charAt(0).toUpperCase() + item.slice(1).toLowerCase()).join(' ');
+        }
+
+        formName.forEach(el => {
+            el.addEventListener('blur', () => {
+                checkInputs(el, /[^а-яё\-\ ]/gi);
+                trimInput(el);
+                el.value = capitalize(el);
+            });
+        });
+
+        formMessage.forEach(el => {
+            el.addEventListener('blur', () => {
+                checkInputs(el, /[^а-яё\-\ ]/gi);
+                trimInput(el);
+                el.value = capitalize(el);
+            });
+        });
+
+        formEmail.forEach(el => {
+            el.addEventListener('blur', () => {
+                checkInputs(el, /[^a-z\@\_\-\.\!\~\*\']/gi);
+                trimInput(el);
+            });
+        });
+
+        window.addEventListener('input', inputsTotal);
+    };
+
+    validateInputs();
+    setCommandImg();
 
 });
