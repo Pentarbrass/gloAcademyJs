@@ -2,14 +2,14 @@
 
 window.addEventListener('DOMContentLoaded', () => {
     // Timer
-    const countTimer = dedline => {
+    const countTimer = deadline => {
         const timerHours = document.querySelector('#timer-hours'),
             timerMinutes = document.querySelector('#timer-minutes'),
             timerSecunds = document.querySelector('#timer-seconds');
         let idInterval = 0;
 
         const getTimeRemaining = () => {
-            const dateStop = new Date(dedline).getTime(),
+            const dateStop = new Date(deadline).getTime(),
                 dateNow = new Date().getTime(),
                 timeRemaining = (dateStop - dateNow) / 1000;
             let seconds = 0,
@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', () => {
         idInterval = setInterval(updateClock, 1000);
     };
 
-    countTimer('1 May 2021');
+    countTimer('2 May 2021');
 
     //Animated Scroll
     const animateScroll = () => {
@@ -404,8 +404,8 @@ window.addEventListener('DOMContentLoaded', () => {
         const countSum = () => {
             let total = 0,
                 countValue = 1,
-                dayValue = 1,
-                step = 1;
+                dayValue = 1;
+
             const typeValue = calcType.options[calcType.selectedIndex].value,
                 squareValue = +calcSquare.value;
 
@@ -422,20 +422,42 @@ window.addEventListener('DOMContentLoaded', () => {
             if (typeValue && squareValue) {
                 total = price * typeValue * squareValue * countValue * dayValue;
             }
-            if (totalValue.textContent != total) {
-                if (totalValue.textContent > total) {
-                    step = -1;
+            animate({
+                // скорость анимации
+                duration: 2000,
+                // Функция расчёта времени
+                timing(timeFraction) {
+                    return timeFraction;
+                },
+                // Функция отрисовки
+                draw(progress) {
+                    // в ней мы и производим вывод данных
+                    totalValue.textContent = Math.floor(progress * total);
+
+                }
+            });
+        };
+        // функция запуска анимации
+        function animate({ duration, draw, timing }) {
+
+            const start = performance.now();
+
+            requestAnimationFrame(function animate(time) {
+
+                let timeFraction = (time - start) / duration;
+
+                if (timeFraction > 1) timeFraction = 1;
+
+                const progress = timing(timeFraction);
+
+                draw(progress);
+
+                if (timeFraction < 1) {
+                    requestAnimationFrame(animate);
                 }
 
-                let timer = setInterval(() => {
-                    totalValue.textContent = +totalValue.textContent + step;
-                    if ((total - totalValue.textContent) * step < 1) {
-                        clearInterval(timer);
-                        totalValue.textContent = Math.round(total);
-                    }
-                }, 0);
-            }
-        };
+            });
+        }
 
         calcBlock.addEventListener('change', event => {
             const target = event.target;
