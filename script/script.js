@@ -310,7 +310,7 @@ window.addEventListener('DOMContentLoaded', () => {
             formEmail = document.querySelectorAll('[name=user_email]'),
             formPhone = document.querySelectorAll('[name=user_phone]');
 
-        let error = new Set();
+        const error = new Set();
 
         const validateNumberInputs = () => {
             calcInputs.forEach(el => {
@@ -377,7 +377,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
         formMessage.forEach(el => {
             el.addEventListener('blur', () => {
-                controlInputs(el, /[^а-яё0-9\.\,\:\-\!\? ]/gi);
+                controlInputs(el, /[^а-яё0-9\.\,\:\-\!\? ]{10,}/gi);
+                el.value = capitalize(el);
                 trimInputs(el);
             });
         });
@@ -497,56 +498,59 @@ window.addEventListener('DOMContentLoaded', () => {
         circle.classList.add('circle');
         statusMessage.style.cssText = 'font-size: 2rem; color: #fff';
 
-        const createRequest = (form) => {
-            form.addEventListener('submit', (e) => {
+        const createRequest = form => {
+            form.addEventListener('submit', e => {
                 e.preventDefault();
                 form.appendChild(statusMessage);
                 form.appendChild(circle);
                 const formData = new FormData(form);
-                let body = {};
+                const body = {};
                 formData.forEach((val, key) => {
                     body[key] = val;
                 });
 
-                postData(body, () => {
-                    document.querySelector('.circle').remove();
-                    statusMessage.textContent = succesMessage;
-                    setTimeout(() => {
-                        statusMessage.innerHTML = '';
-                        document.querySelector('.popup').style.display = 'none';
-                    }, 2000);
-                    let formInputs = form.querySelectorAll('input');
-                    formInputs.forEach(input => {
-                        input.value = input.defaultValue;
+                postData(body)
+                    .then(() => {
+                        document.querySelector('.circle').remove();
+                        statusMessage.textContent = succesMessage;
+                        setTimeout(() => {
+                            statusMessage.innerHTML = '';
+                            document.querySelector('.popup').style.display = 'none';
+                        }, 2000);
+                        const formInputs = form.querySelectorAll('input');
+                        formInputs.forEach(input => {
+                            input.value = input.defaultValue;
+                        });
+                    })
+                    .catch(() => {
+                        document.querySelector('.circle').remove();
+                        statusMessage.textContent = errorMessage;
+                        setTimeout(() => {
+                            statusMessage.innerHTML = '';
+                            document.querySelector('.popup').style.display = 'none';
+                        }, 2000);
+                        console.error(error);
                     });
-                }, () => {
-                    document.querySelector('.circle').remove();
-                    statusMessage.textContent = errorMessage;
-                    setTimeout(() => {
-                        statusMessage.innerHTML = '';
-                        document.querySelector('.popup').style.display = 'none';
-                    }, 2000);
-                    console.error(error);
-                });
             });
         };
 
-        const postData = (body, outputData, errorData) => {
+        const postData = body => new Promise((resolve, reject) => {
             const request = new XMLHttpRequest();
             request.addEventListener('readystatechange', () => {
                 if (request.readyState !== 4) {
                     return;
                 }
                 if (request.status === 200) {
-                    outputData();
+                    resolve();
                 } else {
-                    errorData(request.status);
+                    reject();
                 }
             });
             request.open('POST', './server.php');
             request.setRequestHeader('Content-Type', 'application/json');
             request.send(JSON.stringify(body));
-        };
+        });
+
         createRequest(form1);
         createRequest(form2);
         createRequest(form3);
