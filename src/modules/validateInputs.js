@@ -28,7 +28,7 @@
                 validateTextInputs(e.target);
             }
             if (e.target.matches('[name=user_email]')) {
-                e.target.value = e.target.value.replace(/[^a-z\@\_\-\.\!\~\*\']/gi, '');
+                e.target.value = e.target.value.replace(/[^a-z0-9\@\_\-\.\!\~\*\']/gi, '');
             }
             if (e.target.matches('[name=user_phone]')) {
                 e.target.value = e.target.value.replace(/[^\d\(\)\-\+]/g, '');
